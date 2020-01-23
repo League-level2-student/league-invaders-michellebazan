@@ -30,7 +30,9 @@ int xpos =((int)random(50)*10);
 int ypos = ((int)random(50)*10);
 int direction =  UP;
 int checkFood;
-ArrayList<Segment> segment = new ArrayList<Segment>();
+Segment head = new Segment(xpos,ypos);
+
+ArrayList<Segment> segments = new ArrayList<Segment>();
 
 //*
 // ***** SETUP METHODS *****
@@ -39,7 +41,7 @@ ArrayList<Segment> segment = new ArrayList<Segment>();
 
 void setup() {
   size(500,500);
-  Segment head = new Segment(xpos,ypos);
+
   frameRate(20);
   dropFood();
   
@@ -75,8 +77,8 @@ void drawFood() {
 void drawSnake() {
   //Draw the head of the snake followed by its tail
   fill(50,205,50);
-
   rect(xpos,ypos,10,10);
+  manageTail();
 }
 
 
@@ -90,7 +92,10 @@ void drawTail() {
   
   //got stuck here
   //https://central.jointheleague.org/levels/Level2/Mod2Recipes/Snake3.html
-  rect(xpos-10, ypos-10,10,10);
+  for(int i = 0; i < segments.size(); i++){
+    rect(segments.get(i).xpos, segments.get(i).ypos,10,10);
+  }
+
 }
 
 void manageTail() {
@@ -98,12 +103,16 @@ void manageTail() {
   //This produces the illusion of the snake tail moving.
   checkTailCollision();
   drawTail();
+  segments.add(new Segment(head.xpos, head.ypos));
+  segments.remove(0);
   
 }
 
 void checkTailCollision() {
   //If the snake crosses its own tail, shrink the tail back to one segment
   checkFood = 1;
+  segments = new ArrayList();
+  segments.add(new Segment(head.xpos, head.ypos));
 }
 
 
@@ -117,12 +126,16 @@ void keyPressed() {
   //Set the direction of the snake according to the arrow keys pressed
     direction = keyCode;
     if(keyCode == UP) {
+      head.ypos = ypos;
       ypos= ypos-2;
     } else if (keyCode == DOWN){
+      head.ypos = ypos;
       ypos= ypos+2;
     } else if (keyCode == LEFT){
+      head.xpos = xpos;
       xpos= xpos-2;  
     } else if (keyCode == RIGHT){
+      head.xpos = xpos;
       xpos=xpos+2;
     }
   }
@@ -176,5 +189,8 @@ void eat() {
     checkFood++;
     foodX = ((int)random(50)*10);
     foodY = ((int)random(50)*10);
+    segments.add(new Segment(head.xpos, head.ypos));
+    //it does not move
+    
   }
-}}
+}
