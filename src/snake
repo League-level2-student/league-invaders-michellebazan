@@ -1,3 +1,4 @@
+/*/
 //*
 // ***** SEGMENT CLASS *****
 // This class will be used to represent each part of the moving snake.
@@ -193,3 +194,4 @@ void eat() {
     segments.add(new Segment(head.xpos, head.ypos));
   }
 }
+*/
