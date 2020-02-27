@@ -11,6 +11,8 @@ public class LeagueInvaders {//runner/driver class that controls the entire prog
 	public static final int WIDTH = 500;
 	public static final int HEIGHT = 800;
 	GamePanel gamePanel; 
+	
+
 	LeagueInvaders() {
 	gamePanel = new GamePanel();
 	}
@@ -25,6 +27,7 @@ public class LeagueInvaders {//runner/driver class that controls the entire prog
 		frame.add(gamePanel);
 		frame.setSize(WIDTH, HEIGHT);
 		frame.setVisible(true);
+		frame.addKeyListener(gamePanel);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	
 	}
