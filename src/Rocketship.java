@@ -9,16 +9,22 @@ public class Rocketship extends GameObject{
 		speed = 10;
 	}
 	public void right() {
-        x+=speed;
+		if(x < 450) 
+			x+=speed;
+		
     }
 	public void left() {
-        x-=speed;
+		if(x > 0)
+			x-=speed;
     }
 	public void up() {
-        y+=speed;
+		if(y > 0)
+			y-=speed;
+        
     }
 	public void down() {
-        y-=speed;
+        if(y < 670)
+        	y+=speed;
     }
 
 	void draw(Graphics g) {

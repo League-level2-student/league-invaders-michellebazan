@@ -30,7 +30,7 @@ public class GamePanel extends JPanel
     	//frames per second. So the first parameter will be 1000 / 60. 
     	frameDraw = new Timer(1000/60,this);
         frameDraw.start();
-        rock = new Rocketship(250,700,50,50);
+        rock = new Rocketship(220,650,50,50);
 
     }
     
@@ -114,17 +114,27 @@ public class GamePanel extends JPanel
 		        currentState++;
 		    }
 		} 
+		
 		if (e.getKeyCode()==KeyEvent.VK_UP) {
 		    System.out.println("UP");
+		    //calls up method up
+		    rock.up();
 		}
 		else if (e.getKeyCode()==KeyEvent.VK_DOWN) {
 		    System.out.println("DOWN");
+		    //calls up method down - not working
+		    rock.down();
 		}
 		else if (e.getKeyCode()==KeyEvent.VK_RIGHT) {
+			
 		    System.out.println("RIGHT");
+		    //calls up method right - not working
+		    rock.right();
 		}
 		else if (e.getKeyCode()==KeyEvent.VK_LEFT) {
 		    System.out.println("LEFT");
+		    //calls up method left
+		    rock.left();
 		}
 		
 	}
