@@ -6,14 +6,10 @@ public class ObjectManager {
 	//local is when it's only in the method
 	Rocketship ship;
 	Projectile missile;
-	//fix below --
 	ArrayList<Projectile> projectiles = new ArrayList<Projectile>();
-	(Alien) ArrayList aliens = new ArrayList();
+	ArrayList<Alien> aliens = new ArrayList<Alien>();
 	Random random;
 	
-	//Model Management
-	//figure out steps 4 - array list & 5 -- update method
-	//
 	//https://central.jointheleague.org/levels/Level2/Mod2Recipes/InvadersModelDraw.html
 	ObjectManager(Rocketship ship){
 		this.ship = ship;
@@ -31,17 +27,23 @@ public class ObjectManager {
 	
 	void update() {
 		for(int i = 0; i < aliens.size(); i++){
-			((Alien) aliens.get(i)).update();
-			//find out how to get alien's y position
-			//check alien y position vs game's height
-			//if(aliens.get(y) > LeagueInvaders.HEIGHT) {
+			//updates alien with update method
+			aliens.get(i).update();
+			if(aliens.get(i).y > LeagueInvaders.HEIGHT) {
 				//if the alien is outside --> set isActive variable to false
-				//figure out the isActive variable
-				
-			//}
-			
-			//repeat with the projectiles
+				boolean isActive = false;
+				//isActive is part of the inital game Object
+			}
 		}
+		//repeat with the projectiles
+		for(int i = 0; i < projectiles.size(); i++){
+			projectiles.get(i).update();
+			if(projectiles.get(i).y > LeagueInvaders.HEIGHT) {
+				boolean isActive = false;
+			}
+		}	
+			
+	}
 		
 	void draw() {
 		
