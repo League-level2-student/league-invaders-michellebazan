@@ -11,6 +11,8 @@ import javax.swing.Timer;
 
 public class GamePanel extends JPanel 
 					implements ActionListener, KeyListener{
+	//member variable is when it's defined in that class
+	//local is when it's only in the method
 	final int MENU = 0;
     final int GAME = 1;
     final int END = 2;
@@ -20,7 +22,13 @@ public class GamePanel extends JPanel
     Font enterFont;
     Timer frameDraw;
     Rocketship rock;
+    ObjectManager objMan;
     
+    //https://central.jointheleague.org/levels/Level2/Mod2Recipes/InvadersImages.html
+    //add these images
+   //https://raw.githubusercontent.com/League-central/curriculum/master/levels/Level2/space.png
+    //https://github.com/League-central/curriculum/blob/master/levels/Level2/bullet.png
+    //https://github.com/League-central/curriculum/blob/master/levels/Level2/alien.png
     GamePanel(){ 
     	titleFont = new Font("Arial", Font.PLAIN, 48);
     	enterFont = new Font("Arial", Font.PLAIN, 25);
@@ -31,7 +39,7 @@ public class GamePanel extends JPanel
     	frameDraw = new Timer(1000/60,this);
         frameDraw.start();
         rock = new Rocketship(220,650,50,50);
-
+        objMan = new ObjectManager(rock);
     }
     
     int currentState = MENU;
@@ -41,7 +49,8 @@ public class GamePanel extends JPanel
     }
     
     void updateGameState() { 
-    	
+    	//In the updateGameState method, add a call to the objectManager's update method
+    	objMan.update();
     }
     
     void updateEndState()  { 
@@ -64,7 +73,13 @@ public class GamePanel extends JPanel
     void drawGameState(Graphics g) {  
     	g.setColor(Color.BLACK);
     	g.fillRect(0, 0, LeagueInvaders.WIDTH, LeagueInvaders.HEIGHT);
-    	rock.draw(g);
+    	//rock.draw(g);
+    	//delete the call to the rocket's draw method and replace it with 
+    	//a call to the objectManager's draw method.
+    	objMan.draw(g);
+    	
+    	
+    	
     }
     void drawEndState(Graphics g)  {  
     	g.setColor(Color.RED);

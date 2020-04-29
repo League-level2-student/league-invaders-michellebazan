@@ -1,3 +1,4 @@
+import java.awt.Graphics;
 import java.util.ArrayList;
 import java.util.Random;
 
@@ -31,25 +32,43 @@ public class ObjectManager {
 			aliens.get(i).update();
 			if(aliens.get(i).y > LeagueInvaders.HEIGHT) {
 				//if the alien is outside --> set isActive variable to false
-				boolean isActive = false;
-				//isActive is part of the inital game Object
+				//boolean isActive = false;
+				aliens.get(i).isActive = false;
+				//isActive is part of the initial game Object
 			}
 		}
 		//repeat with the projectiles
 		for(int i = 0; i < projectiles.size(); i++){
 			projectiles.get(i).update();
 			if(projectiles.get(i).y > LeagueInvaders.HEIGHT) {
-				boolean isActive = false;
+				//boolean isActive = false;
+				projectiles.get(i).isActive = false;
 			}
 		}	
 			
 	}
 		
-	void draw() {
-		
+	void draw(Graphics g){
+		ship.draw(g);
+		for(int i = 0; i < aliens.size(); i++){
+			aliens.get(i).draw(g);
+		}
+		for(int i = 0; i < projectiles.size(); i++) {
+			projectiles.get(i).draw(g);
+		}
 	}
 	
 	void purgeObjects() {
+		for (int i = aliens.size(); i >= 0; i--) {
+			if (aliens.get(i).isActive == false) {
+				aliens.remove(i);
+			}
+		}
+		for (int i = projectiles.size(); i >= 0; i--) {
+			if (projectiles.get(i).isActive == false) {
+				projectiles.remove(i);
+			}
 		
+		}
 	}
 }
