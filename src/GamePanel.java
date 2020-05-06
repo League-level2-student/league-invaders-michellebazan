@@ -1,11 +1,15 @@
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics;
+import java.awt.Image;
+import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.awt.image.BufferedImage;
 
+import javax.imageio.ImageIO;
 import javax.swing.JPanel;
 import javax.swing.Timer;
 
@@ -21,14 +25,15 @@ public class GamePanel extends JPanel
     Font titleFont;
     Font enterFont;
     Timer frameDraw;
+    Timer alienSpawn;
     Rocketship rock;
     ObjectManager objMan;
+    public static BufferedImage image;
+	public static boolean needImage = true;
+	public static boolean gotImage = false;	
     
     //https://central.jointheleague.org/levels/Level2/Mod2Recipes/InvadersImages.html
-    //add these images
-   //https://raw.githubusercontent.com/League-central/curriculum/master/levels/Level2/space.png
-    //https://github.com/League-central/curriculum/blob/master/levels/Level2/bullet.png
-    //https://github.com/League-central/curriculum/blob/master/levels/Level2/alien.png
+    
     GamePanel(){ 
     	titleFont = new Font("Arial", Font.PLAIN, 48);
     	enterFont = new Font("Arial", Font.PLAIN, 25);
@@ -40,6 +45,20 @@ public class GamePanel extends JPanel
         frameDraw.start();
         rock = new Rocketship(220,650,50,50);
         objMan = new ObjectManager(rock);
+        if (needImage) {
+		    loadImage ("space.png");
+		}
+    }
+    
+    void startGame(){
+    	//The constructor of the Timer class takes two parameters.
+    	//The first parameter is an int for how fast your want the timer to 
+    	//repeat in milliseconds.
+    	//The second parameter takes a reference to an ActionListener object.
+    	//https://central.jointheleague.org/levels/Level2/Mod2Recipes/InvadersAlienTimer.html
+    	//I was on five
+    	alienSpawn = new Timer(1000 , objMan);
+    	alienSpawn.start();
     }
     
     int currentState = MENU;
@@ -71,8 +90,16 @@ public class GamePanel extends JPanel
     	g.drawString("Press SPACE for instructions", x-430, y-300);
     }
     void drawGameState(Graphics g) {  
-    	g.setColor(Color.BLACK);
-    	g.fillRect(0, 0, LeagueInvaders.WIDTH, LeagueInvaders.HEIGHT);
+    	if (gotImage) {
+        	g.drawImage(image,0,0, LeagueInvaders.WIDTH, LeagueInvaders.HEIGHT, null);
+        } else {
+        	g.setColor(Color.BLACK);
+        	g.fillRect(0, 0, LeagueInvaders.WIDTH, LeagueInvaders.HEIGHT);
+        }
+    	
+    	//g.setColor(Color.BLACK);
+    	//g.fillRect(0, 0, LeagueInvaders.WIDTH, LeagueInvaders.HEIGHT);
+
     	//rock.draw(g);
     	//delete the call to the rocket's draw method and replace it with 
     	//a call to the objectManager's draw method.
@@ -152,6 +179,17 @@ public class GamePanel extends JPanel
 		    rock.left();
 		}
 		
+	}
+	void loadImage(String imageFile) {
+	    if (needImage) {
+	        try {
+	            image = ImageIO.read(this.getClass().getResourceAsStream(imageFile));
+		    gotImage = true;
+	        } catch (Exception e) {
+	            
+	        }
+	        needImage = false;
+	    }
 	}
 
 	@Override
