@@ -32,7 +32,6 @@ public class GamePanel extends JPanel
 	public static boolean needImage = true;
 	public static boolean gotImage = false;	
     
-    //https://central.jointheleague.org/levels/Level2/Mod2Recipes/InvadersImages.html
     
     GamePanel(){ 
     	titleFont = new Font("Arial", Font.PLAIN, 48);
@@ -55,8 +54,6 @@ public class GamePanel extends JPanel
     	//The first parameter is an int for how fast your want the timer to 
     	//repeat in milliseconds.
     	//The second parameter takes a reference to an ActionListener object.
-    	//https://central.jointheleague.org/levels/Level2/Mod2Recipes/InvadersAlienTimer.html
-    	//I was on five
     	alienSpawn = new Timer(1000 , objMan);
     	alienSpawn.start();
     }
@@ -136,7 +133,7 @@ public class GamePanel extends JPanel
 		if(currentState == MENU){
 		    updateMenuState();
 		}else if(currentState == GAME){
-		    updateGameState();
+		    updateGameState();		    
 		}else if(currentState == END){
 		    updateEndState();
 		}
@@ -148,12 +145,21 @@ public class GamePanel extends JPanel
 	@Override
 	public void keyPressed(KeyEvent e) {
 		// TODO Auto-generated method stub
-		//https://central.jointheleague.org/levels/Level2/Mod2Recipes/InvadersRocketUpdate.html
+		// menu --> game
+		//startGame();
+		// game --> end
+		//alienSpawn.stop();
 		if (e.getKeyCode()==KeyEvent.VK_ENTER) {
 		    if (currentState == END) {
 		        currentState = MENU;
-		    } else {
+		    } else if(currentState == MENU){
+		    	startGame();
 		        currentState++;
+		    	//currentState = GAME;
+		    } else if (currentState == GAME) {
+		    	alienSpawn.stop();
+		        currentState++;
+		    	//currentState = END;
 		    }
 		} 
 		
@@ -177,6 +183,9 @@ public class GamePanel extends JPanel
 		    System.out.println("LEFT");
 		    //calls up method left
 		    rock.left();
+		}
+		else if(e.getKeyCode()==KeyEvent.VK_SPACE) {
+			objMan.addProjectile(rock.getProjectile());
 		}
 		
 	}

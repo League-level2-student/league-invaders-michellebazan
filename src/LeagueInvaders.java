@@ -1,7 +1,4 @@
-import java.awt.Graphics;
-
 import javax.swing.JFrame;
-import javax.swing.JPanel;
 
 public class LeagueInvaders {//runner/driver class that controls the entire program 
 	//using the other classes that you will create later.

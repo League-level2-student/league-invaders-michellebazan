@@ -11,7 +11,7 @@ public class ObjectManager implements ActionListener{
 	Projectile missile;
 	ArrayList<Projectile> projectiles = new ArrayList<Projectile>();
 	ArrayList<Alien> aliens = new ArrayList<Alien>();
-	Random random;
+	Random random = new Random();
 	
 	//https://central.jointheleague.org/levels/Level2/Mod2Recipes/InvadersModelDraw.html
 	ObjectManager(Rocketship ship){
@@ -72,6 +72,19 @@ public class ObjectManager implements ActionListener{
 			}
 		
 		}
+	}
+	
+	void checkCollision() {
+		//Add code that iterates through every alien and checks if it collides
+		//with any "enemy" (Rocket or Projectile). 
+		for(int i = 0; i < aliens.size(); i++) {
+			//will be a nested for loops (loop in a loop)
+			//If they collide, set the Alien AND "enemy's" isActive variables to false.
+			//rock.collisionBox.intersects(aliens.collisionBox) - doesn't work
+			//https://central.jointheleague.org/levels/Level2/Mod2Recipes/InvadersCollision.html
+
+		}
+		
 	}
 
 	@Override
