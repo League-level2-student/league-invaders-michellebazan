@@ -7,16 +7,15 @@ import java.util.Random;
 public class ObjectManager implements ActionListener{
 	//member variable is when it's defined in that class
 	//local is when it's only in the method
-	Rocketship ship;
-	Projectile missile;
+	Rocketship rock;
 	ArrayList<Projectile> projectiles = new ArrayList<Projectile>();
 	ArrayList<Alien> aliens = new ArrayList<Alien>();
 	Random random = new Random();
 	
 	//https://central.jointheleague.org/levels/Level2/Mod2Recipes/InvadersModelDraw.html
-	ObjectManager(Rocketship ship){
-		this.ship = ship;
-	
+	ObjectManager(Rocketship rock){
+		this.rock = rock;
+		
 	}
 	
 	void addProjectile(Projectile missile) {
@@ -29,6 +28,10 @@ public class ObjectManager implements ActionListener{
 	}
 	
 	void update() {
+		rock.update();
+		//alien now dies, rock remains alive
+		//https://central.jointheleague.org/levels/Level2/Mod2Recipes/InvadersCollision.html
+		
 		for(int i = 0; i < aliens.size(); i++){
 			//updates alien with update method
 			aliens.get(i).update();
@@ -47,11 +50,13 @@ public class ObjectManager implements ActionListener{
 				projectiles.get(i).isActive = false;
 			}
 		}	
+		checkCollision();
+		purgeObjects();
 			
 	}
 		
 	void draw(Graphics g){
-		ship.draw(g);
+		rock.draw(g);
 		for(int i = 0; i < aliens.size(); i++){
 			aliens.get(i).draw(g);
 		}
@@ -61,12 +66,12 @@ public class ObjectManager implements ActionListener{
 	}
 	
 	void purgeObjects() {
-		for (int i = aliens.size(); i >= 0; i--) {
+		for (int i = aliens.size()-1; i >= 0; i--) {
 			if (aliens.get(i).isActive == false) {
 				aliens.remove(i);
 			}
 		}
-		for (int i = projectiles.size(); i >= 0; i--) {
+		for (int i = projectiles.size()-1; i >= 0; i--) {
 			if (projectiles.get(i).isActive == false) {
 				projectiles.remove(i);
 			}
@@ -74,13 +79,30 @@ public class ObjectManager implements ActionListener{
 		}
 	}
 	
+	//Create a method called checkCollision
 	void checkCollision() {
 		//Add code that iterates through every alien and checks if it collides
 		//with any "enemy" (Rocket or Projectile). 
 		for(int i = 0; i < aliens.size(); i++) {
+			//If they collide, set the Alien AND "enemy's" isActive variables to false.
+			if(rock.collisionBox.intersects(aliens.get(i).collisionBox)) { 
+							rock.isActive = false;
+							aliens.get(i).isActive = false;
+						
+					}
+					for(int a = 0; a < projectiles.size(); a++) {
+						if(projectiles.get(a).collisionBox.intersects(aliens.get(i).collisionBox)) {
+							aliens.get(i).isActive = false;
+							projectiles.get(a).isActive = false; 
+			}
+			}
+			
+			
+			//one loop to check go through all aliens 
 			//will be a nested for loops (loop in a loop)
 			//If they collide, set the Alien AND "enemy's" isActive variables to false.
-			//rock.collisionBox.intersects(aliens.collisionBox) - doesn't work
+			//doesn't work?
+			
 			//https://central.jointheleague.org/levels/Level2/Mod2Recipes/InvadersCollision.html
 
 		}

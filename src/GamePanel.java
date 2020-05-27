@@ -67,6 +67,9 @@ public class GamePanel extends JPanel
     void updateGameState() { 
     	//In the updateGameState method, add a call to the objectManager's update method
     	objMan.update();
+    	if(rock.isActive = false) {
+    		currentState = END;
+    	}
     }
     
     void updateEndState()  { 

@@ -14,7 +14,7 @@ public class GameObject {
 		this.y = y;
 		this.width = width;
 		this.height = height;
-		Rectangle collisionBox = new Rectangle(x, y, width, height);
+		collisionBox = new Rectangle(x, y, width, height);
 		
 		speed = 0;
 		isActive = true;
@@ -23,5 +23,8 @@ public class GameObject {
 	void update(){
         collisionBox.setBounds(x, y, width, height);
 	}
- 
+ //the game froze haha
+	//it is not deleting
+	//the game itself does not close when i press the big x at the top
+	//well none showed up
 }
