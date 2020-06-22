@@ -7,10 +7,17 @@ import java.util.Random;
 public class ObjectManager implements ActionListener{
 	//member variable is when it's defined in that class
 	//local is when it's only in the method
+	static Integer score = 0;
 	Rocketship rock;
 	ArrayList<Projectile> projectiles = new ArrayList<Projectile>();
 	ArrayList<Alien> aliens = new ArrayList<Alien>();
 	Random random = new Random();
+	
+	//Getter
+	public Integer getScore() {
+		return score;
+	}
+	
 	
 	//https://central.jointheleague.org/levels/Level2/Mod2Recipes/InvadersModelDraw.html
 	ObjectManager(Rocketship rock){
@@ -28,32 +35,42 @@ public class ObjectManager implements ActionListener{
 	}
 	
 	void update() {
+	
 		rock.update();
-		//alien now dies, rock remains alive
 		//https://central.jointheleague.org/levels/Level2/Mod2Recipes/InvadersCollision.html
-		
-		for(int i = 0; i < aliens.size(); i++){
-			//updates alien with update method
-			aliens.get(i).update();
-			if(aliens.get(i).y > LeagueInvaders.HEIGHT) {
-				//if the alien is outside --> set isActive variable to false
-				//boolean isActive = false;
-				aliens.get(i).isActive = false;
-				//isActive is part of the initial game Object
+			for(int i = 0; i < aliens.size(); i++){
+				//updates alien with update method
+				
+				aliens.get(i).update();
+				if(aliens.get(i).y > LeagueInvaders.HEIGHT) {
+					//if the alien is outside --> set isActive variable to false
+					//boolean isActive = false;
+					aliens.get(i).isActive = false;
+					//isActive is part of the initial game Object
+				}
 			}
-		}
-		//repeat with the projectiles
-		for(int i = 0; i < projectiles.size(); i++){
-			projectiles.get(i).update();
-			if(projectiles.get(i).y > LeagueInvaders.HEIGHT) {
-				//boolean isActive = false;
-				projectiles.get(i).isActive = false;
-			}
-		}	
-		checkCollision();
-		purgeObjects();
 			
-	}
+			//repeat with the projectiles
+			for(int i = 0; i < projectiles.size(); i++){
+				//if (rock.isActive = false) {
+				//	break;
+				//}
+				projectiles.get(i).update();
+				if(projectiles.get(i).y > LeagueInvaders.HEIGHT) {
+					//boolean isActive = false;
+					projectiles.get(i).isActive = false;
+				}
+			}	
+				checkCollision();
+				purgeObjects();
+			
+		}
+//If the rocket is marked inActive, you can skip all the remaining 
+//updates and purging because the game is over.
+	
+		
+	
+	
 		
 	void draw(Graphics g){
 		rock.draw(g);
@@ -86,22 +103,17 @@ public class ObjectManager implements ActionListener{
 		for(int i = 0; i < aliens.size(); i++) {
 			//If they collide, set the Alien AND "enemy's" isActive variables to false.
 			if(rock.collisionBox.intersects(aliens.get(i).collisionBox)) { 
-							rock.isActive = false;
-							aliens.get(i).isActive = false;
-						
+				rock.isActive = false;
+				aliens.get(i).isActive = false;
+				}
+			for(int a = 0; a < projectiles.size(); a++) {
+				if(projectiles.get(a).collisionBox.intersects(aliens.get(i).collisionBox)) {
+					projectiles.get(a).isActive = false; 
+					aliens.get(i).isActive = false;
+					score++; //score = score + 1;
 					}
-					for(int a = 0; a < projectiles.size(); a++) {
-						if(projectiles.get(a).collisionBox.intersects(aliens.get(i).collisionBox)) {
-							aliens.get(i).isActive = false;
-							projectiles.get(a).isActive = false; 
-			}
 			}
 			
-			
-			//one loop to check go through all aliens 
-			//will be a nested for loops (loop in a loop)
-			//If they collide, set the Alien AND "enemy's" isActive variables to false.
-			//doesn't work?
 			
 			//https://central.jointheleague.org/levels/Level2/Mod2Recipes/InvadersCollision.html
 

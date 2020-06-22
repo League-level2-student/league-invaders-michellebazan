@@ -32,8 +32,9 @@ public class GamePanel extends JPanel
 	public static boolean needImage = true;
 	public static boolean gotImage = false;	
     
-    
-    GamePanel(){ 
+	//Use the getScore method in the ObjectManager class to get the player's score and display it on the panel.
+			
+	GamePanel(){ 
     	titleFont = new Font("Arial", Font.PLAIN, 48);
     	enterFont = new Font("Arial", Font.PLAIN, 25);
     	// The first parameter is an int for how fast your want
@@ -42,6 +43,7 @@ public class GamePanel extends JPanel
     	//frames per second. So the first parameter will be 1000 / 60. 
     	frameDraw = new Timer(1000/60,this);
         frameDraw.start();
+
         rock = new Rocketship(220,650,50,50);
         objMan = new ObjectManager(rock);
         if (needImage) {
@@ -55,6 +57,7 @@ public class GamePanel extends JPanel
     	//repeat in milliseconds.
     	//The second parameter takes a reference to an ActionListener object.
     	alienSpawn = new Timer(1000 , objMan);
+    	objMan.score = 0;
     	alienSpawn.start();
     }
     
@@ -67,13 +70,16 @@ public class GamePanel extends JPanel
     void updateGameState() { 
     	//In the updateGameState method, add a call to the objectManager's update method
     	objMan.update();
-    	if(rock.isActive = false) {
+    	if(rock.isActive == false) { 
     		currentState = END;
+    		
+    		rock = new Rocketship(220,650,50,50);
+            objMan = new ObjectManager(rock);
     	}
     }
     
     void updateEndState()  { 
-    	
+    	//empty
     }
     //3 void methods for drawing the game in each state
     void drawMenuState(Graphics g) {  
@@ -89,10 +95,12 @@ public class GamePanel extends JPanel
     	
     	g.drawString("Press SPACE for instructions", x-430, y-300);
     }
+    
     void drawGameState(Graphics g) {  
     	if (gotImage) {
         	g.drawImage(image,0,0, LeagueInvaders.WIDTH, LeagueInvaders.HEIGHT, null);
-        } else {
+
+    	} else {
         	g.setColor(Color.BLACK);
         	g.fillRect(0, 0, LeagueInvaders.WIDTH, LeagueInvaders.HEIGHT);
         }
@@ -104,9 +112,7 @@ public class GamePanel extends JPanel
     	//delete the call to the rocket's draw method and replace it with 
     	//a call to the objectManager's draw method.
     	objMan.draw(g);
-    	
-    	
-    	
+    		
     }
     void drawEndState(Graphics g)  {  
     	g.setColor(Color.RED);
@@ -114,7 +120,9 @@ public class GamePanel extends JPanel
     	
     	g.setFont(titleFont);
     	g.setColor(Color.GREEN);
-    	g.drawString("End State", x, y);
+    	g.drawString("End State", 150, 100);
+    	g.drawString("Score: " + objMan.getScore(), 150, 200);
+    	
     }
     
 	@Override
@@ -154,7 +162,14 @@ public class GamePanel extends JPanel
 		//alienSpawn.stop();
 		if (e.getKeyCode()==KeyEvent.VK_ENTER) {
 		    if (currentState == END) {
-		        currentState = MENU;
+		    	//replace the existing inactive rocketship with a new Rocketship object.
+		    	rock = new Rocketship(220,650,50,50);
+		    	
+		    	//Replace the existing ObjectManager with a new ObjectMangaer object, 
+		    	//passing the rocketship object to the constructor.
+		    	objMan = new ObjectManager(rock);
+		    	
+		    	currentState = MENU;
 		    } else if(currentState == MENU){
 		    	startGame();
 		        currentState++;

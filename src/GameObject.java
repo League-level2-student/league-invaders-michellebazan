@@ -22,9 +22,7 @@ public class GameObject {
 	
 	void update(){
         collisionBox.setBounds(x, y, width, height);
+        
 	}
- //the game froze haha
-	//it is not deleting
-	//the game itself does not close when i press the big x at the top
-	//well none showed up
+ 
 }
