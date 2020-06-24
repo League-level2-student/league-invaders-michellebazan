@@ -97,6 +97,7 @@ public class GamePanel extends JPanel
     }
     
     void drawGameState(Graphics g) {  
+
     	if (gotImage) {
         	g.drawImage(image,0,0, LeagueInvaders.WIDTH, LeagueInvaders.HEIGHT, null);
 
@@ -107,8 +108,12 @@ public class GamePanel extends JPanel
     	
     	//g.setColor(Color.BLACK);
     	//g.fillRect(0, 0, LeagueInvaders.WIDTH, LeagueInvaders.HEIGHT);
+    	g.drawString(String.valueOf(objMan.score), x-430, y-110);
 
-    	//rock.draw(g);
+    	
+    	
+    	
+      	//rock.draw(g);
     	//delete the call to the rocket's draw method and replace it with 
     	//a call to the objectManager's draw method.
     	objMan.draw(g);
