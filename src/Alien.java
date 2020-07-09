@@ -11,7 +11,7 @@ public class Alien extends GameObject{
 
 	Alien(int x, int y, int width, int height) {
 		super(x, y, width, height);
-		// TODO Auto-generated constructor stub
+		//TODO Auto-generated constructor stub
 		speed = 1;
 		if (needImage) {
 		    loadImage ("alien.png");
